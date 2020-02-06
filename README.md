@@ -31,6 +31,8 @@ print(new_list)
 # [5, 4, 3, 2, 1]
 ```
 
+https://qiita.com/rsakamot/items/2277e26e3716e8f8f5a2
+
 ### タプルのメリット
 - 戻り値や不変にしておきたいデータ群を設定することに役立つ
 - リストよりも高速に処理できる
@@ -39,11 +41,27 @@ print(new_list)
 ### セットのメリット
 - 順番を持たずユニークな値しか保持しないため、厳格。これを使って集合処理ができる
 
+### 要素をランダムで取り出す
+https://note.nkmk.me/python-random-choice-sample-choices/
+
 ## ファイル操作
 ファイルを開いたら、最後に`file.close()`が必要となるが、仮につけていなかった場合、ガベージコレクタがファイルオブジェクトを自動で削除する。
 でも、それまでの間にファイルオブジェクトが生成されたままとなっている可能性がある。
 
 `with open()`構文でファイルを開くと、ファイル入出力はインデントの間だけ実行される。
 
+```sample.py
+# file = open("file_ope/data.txt")
+# data = file.read()
+# print(data)
+# file.close()
+
+# やってることは一緒
+with open("file_ope/data.txt") as file:
+    print(file.read())
+```
+
 ### importするモジュール名とファイル名の重複に気をつけること!!!
 
+# numpyのチュートリアル
+https://deepage.net/features/numpy/
