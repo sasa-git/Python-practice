@@ -14,6 +14,7 @@ for i in num:
     if i != 0:
         numbers.append(i)
 leftindex = [numbers[0]]
+s_leftindex = set(leftindex)
 # print(leftindex)
 # print(numbers)
 print("numbers:",numbers)
@@ -26,6 +27,7 @@ print("numbers:",numbers)
 for i in range(0,len(numbers)):
     if not numbers[i] in leftindex:
         leftindex.append(numbers[i])
+        s_leftindex.add(numbers[i])
 print("output:", leftindex)
 # print(not 5 in leftindex)
 
