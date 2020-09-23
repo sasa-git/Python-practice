@@ -63,5 +63,17 @@ with open("file_ope/data.txt") as file:
 
 ### importするモジュール名とファイル名の重複に気をつけること!!!
 
+# 仮想環境の作成
+
+```bash
+# 特定のプロジェクト内で
+% python3 -m venv [仮想環境名(venvにしとくといいよ)] # use: $ python3 -m venv venv
+% source venv/bin/activate
+# これでpipをするとvenv内の実行環境にライブラリがインストールされるから環境が汚染されない!
+
+# 仮想環境から抜けるには
+% deactivate
+```
+
 # numpyのチュートリアル
 https://deepage.net/features/numpy/
