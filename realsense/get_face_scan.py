@@ -9,6 +9,7 @@ import cv2
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly
+from path import Path
 
 def pcshow(xs,ys,zs):
     data=[go.Scatter3d(x=xs, y=ys, z=zs,
@@ -66,7 +67,7 @@ def show_img(img, dep_img):
     plt.close()
 
 def dbscan(pcd):
-    labels = np.array(pcd.cluster_dbscan(eps=0.01, min_points=10, print_progress=True))
+    labels = np.array(pcd.cluster_dbscan(eps=0.005, min_points=10, print_progress=True))
     print(f"pcd.points.shape(): {np.array(pcd.points).shape}")
     print(f"labels.shape(): {labels.shape}")
 
@@ -85,6 +86,8 @@ def dbscan(pcd):
         part_of_pcd.points = o3d.utility.Vector3dVector(np.array(pcd.points)[mask])
         print(f"label: {label}")
         o3d.visualization.draw_geometries([part_of_pcd])
+        if label >= 3:
+            break
 
     print("choose face label:")
     val = int(input())
@@ -140,6 +143,7 @@ while True:
         cv2.destroyAllWindows()
         break
 
+# Depthイメージだけで点群生成
 print(dep_img.shape)
 color_image = o3d.geometry.Image(img)
 depth_image = o3d.geometry.Image(dep_img)
@@ -160,7 +164,7 @@ o3d.visualization.draw_geometries([pcd, mesh_frame])
 face_pcd = dbscan(pcd)
 
 # Downsample
-# voxel_size=0.01---600ぐらい
+# voxel_size=0.01---600pointsぐらい
 # voxel_size=0.005---2400ぐらい
 down_sample_face = face_pcd.voxel_down_sample(voxel_size=0.01)
 print('Down sampled face...')
@@ -168,23 +172,31 @@ o3d.visualization.draw_geometries([down_sample_face])
 
 # Limited points
 points = np.array(down_sample_face.points)
-points = points[points[:, 1] > -0.12][:600]
+
+# show by plotly
+x, y, z = points[:, 0], points[:, 1], points[:, 2]
+pcshow(x, y, z)
+
+crop_point = float(input("Crop point: "))
+
+# points = points[points[:, 1] > -0.12][:600]
+# points = points[points[:, 1] > -0.06][:600] # Realsenseから60cm
+points = points[points[:, 1] > crop_point][:600] # Realsenseから60cm
 down_sample_face.points = o3d.utility.Vector3dVector(points)
 print('Limited points face...')
 o3d.visualization.draw_geometries([down_sample_face])
 
-# show by plotly
-x, y, z = points[:600, 0], points[:600, 1], points[:600, 2]
-pcshow(x, y, z)
 
 shape = np.array(down_sample_face.points).shape
 
 print(f'face_pcd.shape: {shape}')
 
+root_path = Path("TestData/five_faces_class")
+
 path = input('Put path and filename:')
 path += ".pcd"
-o3d.io.write_point_cloud(path, face_pcd)
-print(f'saved at [{path}].')
+o3d.io.write_point_cloud(root_path/path, face_pcd)
+print(f'saved at [{root_path/path}].')
 
 # ストリーミング停止
 pipeline.stop()
