@@ -6,3 +6,4 @@ __pycache__/
 # *.jpg
 venv/
 five_faces_class/
+five_position_classes/
