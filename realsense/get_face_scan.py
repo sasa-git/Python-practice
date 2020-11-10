@@ -1,5 +1,6 @@
 # five_position_class
 # 顔のデータを撮影して指定のクラスにpcdファイルを保存
+# Usage: -> % python3 get_face_scan.py TestData/five_position_classes/r45/valid
 
 import pyrealsense2 as rs
 import numpy as np
