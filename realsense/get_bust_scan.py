@@ -119,6 +119,12 @@ def crop(points, pcd):
     pcd.points = o3d.utility.Vector3dVector(new_points)
     return pcd
 
+def crop_bust(points, pcd, limit):
+    sort = points[:, 1].argsort()
+    new_points = points[sort][::-1][:limit]
+    pcd.points = o3d.utility.Vector3dVector(new_points)
+    return pcd
+
 # ストリーム(Depth/Color)の設定
 config = rs.config()
 config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 30)
@@ -195,7 +201,8 @@ points = np.array(down_sample_face.points)
 print(f"points.shape: {points.shape}")
 
 # 顔だけ切り取る場合はコメントを外す
-down_sample_face = crop(points, down_sample_face)
+# down_sample_face = crop(points, down_sample_face)
+down_sample_face = crop_bust(points, down_sample_face, 1000)
 
 print('Limited points face...')
 o3d.visualization.draw_geometries([down_sample_face])
@@ -212,9 +219,8 @@ if len(sys.argv) == 3:
     name = sys.argv[2] + ".pcd"
 else:
     name = str(len(os.listdir(root_path))) + ".pcd"
-    
-path = root_path/name
 
+path = root_path/name
 # path = input('Put path and filename(ex...[r45/train/x]):')
 
 # face_pcd 首下もある
