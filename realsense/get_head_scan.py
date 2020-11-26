@@ -90,7 +90,7 @@ def dbscan(pcd):
         part_of_pcd = o3d.geometry.PointCloud()
         part_of_pcd.points = o3d.utility.Vector3dVector(np.array(pcd.points)[mask])
         print(f"label: {label}")
-        o3d.visualization.draw_geometries([part_of_pcd])
+        # o3d.visualization.draw_geometries([part_of_pcd])
         points_size = len(np.array(part_of_pcd.points))
         if label >= 0 and points_size > 1000:
             val = label
@@ -105,7 +105,7 @@ def dbscan(pcd):
     face = o3d.geometry.PointCloud()
     face.points = o3d.utility.Vector3dVector(np.array(pcd.points)[mask])
     print(f"you choosed: {val}")
-    o3d.visualization.draw_geometries([face])
+    # o3d.visualization.draw_geometries([face])
     return face
 
 def crop(points, pcd):
@@ -122,6 +122,7 @@ def crop(points, pcd):
     return pcd
 
 def crop_bust(points, pcd, limit):
+    assert len(points) > limit, f"expected len(points) > {limit}, but was {len(points)}:("
     sort = points[:, 1].argsort()
     new_points = points[sort][::-1][:limit]
     pcd.points = o3d.utility.Vector3dVector(new_points)
@@ -195,7 +196,7 @@ face_pcd = dbscan(pcd)
 # voxel_size=0.005---2400ぐらい
 down_sample_face = face_pcd.voxel_down_sample(voxel_size=0.01)
 print('Down sampled face...')
-o3d.visualization.draw_geometries([down_sample_face])
+# o3d.visualization.draw_geometries([down_sample_face])
 
 # Limited points
 points = np.array(down_sample_face.points)
