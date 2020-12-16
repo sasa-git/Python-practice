@@ -72,7 +72,7 @@ def show_img(img, dep_img):
     plt.close()
 
 def dbscan(pcd):
-    labels = np.array(pcd.cluster_dbscan(eps=0.01, min_points=10, print_progress=True))
+    labels = np.array(pcd.cluster_dbscan(eps=0.01, min_points=80, print_progress=True))
     print(f"pcd.points.shape(): {np.array(pcd.points).shape}")
     print(f"labels.shape(): {labels.shape}")
 
@@ -90,16 +90,16 @@ def dbscan(pcd):
         part_of_pcd = o3d.geometry.PointCloud()
         part_of_pcd.points = o3d.utility.Vector3dVector(np.array(pcd.points)[mask])
         print(f"label: {label}")
-        # o3d.visualization.draw_geometries([part_of_pcd])
+        o3d.visualization.draw_geometries([part_of_pcd])
         points_size = len(np.array(part_of_pcd.points))
-        if label >= 0 and points_size > 1000:
+        if label >= 0 and label <= 3 and points_size > 1000:
             val = label
         if label >= 3:
             break
 
-    # print("choose face label:")
-    # val = int(input())
-    # val = 1
+    print("choose face label:")
+    val = int(input())
+    # val = 0
 
     mask = labels == val
     face = o3d.geometry.PointCloud()
