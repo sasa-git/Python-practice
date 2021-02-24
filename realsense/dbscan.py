@@ -3,7 +3,7 @@ import open3d as o3d
 import matplotlib.pyplot as plt
 
 def main():
-    pcd = o3d.io.read_point_cloud("./TestData/output.ply")
+    pcd = o3d.io.read_point_cloud("./TestData/out.ply")
     print(pcd)
     labels = np.array(pcd.cluster_dbscan(eps=0.02, min_points=10, print_progress=True))
     print(f"pcd.points.shape(): {np.array(pcd.points).shape}")
