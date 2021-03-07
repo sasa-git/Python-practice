@@ -116,3 +116,35 @@ array([[ 0.33160321,  0.34339444, -1.64164379],
        [-0.80667429,  0.06196743,  0.29047129],
        [-2.55202485, -0.22806646, -0.05205104]])
 ```
+
+# 開発環境周りメモ
+
+## Big Surでpyenvでinstallできない
+
+### 症状
+pyenvを使ってPythonをインストールしようとしたら失敗した(他バージョンでも同じ症状)
+
+```
+-> % pyenv install 3.7.6
+python-build: use openssl@1.1 from homebrew
+python-build: use readline from homebrew
+Downloading Python-3.7.6.tar.xz...
+-> https://www.python.org/ftp/python/3.7.6/Python-3.7.6.tar.xz
+Installing Python-3.7.6...
+python-build: use readline from homebrew
+python-build: use zlib from xcode sdk
+
+BUILD FAILED (OS X 11.2.1 using python-build 1.2.23-54-gabcbf6e1)
+.
+.
+.
+```
+
+### 解決策
+
+3.9.0に対しては、これで解決した
+環境変数を追加して再度インストールしてみる
+
+```
+-> % LDFLAGS="-L$(xcrun --show-sdk-path)/usr/lib" pyenv install 3.9.0
+```
