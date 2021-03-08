@@ -20,3 +20,4 @@ scipy
 selenium
 urllib3
 python-dotenv
+scrapy
