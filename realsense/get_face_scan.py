@@ -94,11 +94,11 @@ def dbscan(pcd):
         points_size = len(np.array(part_of_pcd.points))
         if label >= 0 and points_size > 1000:
             val = label
-        if label >= 3:
+        if label >= 5:
             break
 
-    # print("choose face label:")
-    # val = int(input())
+    print("choose face label:")
+    val = int(input())
     # val = 1
 
     mask = labels == val
@@ -184,6 +184,9 @@ print('your taked pcd:')
 
 face_pcd = dbscan(pcd)
 
+points = np.array(face_pcd.points)
+print(f"head points.shape: {points.shape}")
+
 # Downsample
 # voxel_size=0.01---600pointsぐらい
 # voxel_size=0.005---2400ぐらい
@@ -194,7 +197,7 @@ o3d.visualization.draw_geometries([down_sample_face])
 # Limited points
 points = np.array(down_sample_face.points)
 
-print(f"points.shape: {points.shape}")
+print(f"down sampled points.shape: {points.shape}")
 
 # 顔だけ切り取る場合はコメントを外す
 down_sample_face = crop(points, down_sample_face)
