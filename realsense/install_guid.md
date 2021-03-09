@@ -1,5 +1,9 @@
 # PythonでRealSenseが使えるようになるまで
 
+Macの環境でのノートになります
+
+~~Windowsはわかんないや~~
+
 ```
 # 自分の場合、~/Workspace/Libraryディレクトリ内で作業を行う
 $ cd ~/Workspace/Library
