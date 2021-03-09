@@ -6,4 +6,6 @@ import sys
 
 path = sys.argv[1]
 pcd = o3d.io.read_point_cloud(path)
+points = np.array(pcd.points)
+print(points.shape)
 o3d.visualization.draw_geometries([pcd])
