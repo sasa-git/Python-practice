@@ -21,3 +21,5 @@ selenium
 urllib3
 python-dotenv
 scrapy
+mecab-python3
+gensim
