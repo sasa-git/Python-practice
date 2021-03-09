@@ -95,6 +95,7 @@ python3.7
 
 ### 参考
 http://lpha-z.hatenablog.com/entry/2018/12/30/231500
+
 https://qiita.com/ymdymd/items/312c9f554d4ffb1f8dc6
 
 ## アンインストール
